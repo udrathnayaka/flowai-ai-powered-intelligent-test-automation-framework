@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="style.css">
+<html>
+<head>
+    <title>FlowAI : AI-Powered Intelligent Test Automation Framework​ </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    $("#fetchButton").click(function() {
+        var inputText = $("#input").val().trim();
+        if (inputText === "") {
+            alert("You must enter some text.");
+            return;
+        }
+        var contents = inputText + "\nAnswer the following question.";
+        var modelId = "text-davinci-003";
+        $("#output").val("FlowAI is generating the response....");
+
+        $.ajax({
+            url: "https://api.openai.com/v1/engines/" + modelId + "/completions",
+            type: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer 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"
+            },
+            data: JSON.stringify({
+                prompt: contents,
+                max_tokens: 256,
+                temperature: 0.7,
+                top_p: 1
+            }),
+            success: function(response) {
+                if (response.choices && response.choices.length > 0) {
+                    var responseText = response.choices[0].text.trim();
+                    $("#output").val(responseText);
+                } else {
+                    $("#output").val("Error: No completion found");
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#output").val("Error: " + error);
+            }
+        });
+    });
+});
+    </script>
+</head>
+<body  background="desktop-1920x1080.jpg" background-repeat="no-repeat” background-size="cover”>
+    
+   
+    <header> <h1>FlowAI : AI-Powered Intelligent Test Automation Framework</h1> </header> </p>
+    
+    <textarea class="textarea" id="input" placeholder="Enter your prompt here.."></textarea>
+
+    <textarea  class="textarea" id="output" placeholder="FlowAI response will be shown here.." readonly></textarea>
+
+    
+    <p> <button class="button-66" role="button" id="fetchButton">Generate </button> </p>
+    <img class="img-60" src="Picture1.png" >
+    <img class="img-61" src="MicrosoftTeams-image (5).png" >
+   
+    
+</body>
+</html>
